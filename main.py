@@ -1,5 +1,5 @@
 import pygame
-import sys
+import controls
 from gun import Gun
 
 
@@ -11,11 +11,7 @@ def run() -> None:
     gun = Gun(screen)
 
     while True:
-        # Events proccessing.
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit()
-
+        controls.events() 
         screen.fill(bg_color)
         gun.output()
         pygame.display.flip()
