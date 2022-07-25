@@ -30,7 +30,7 @@ def events(screen, gun, bullets) -> None:
                 gun.mleft = False
 
 
-def screen_update(bg_color: tuple, screen , gun, bullets) -> None:
+def screen_update(bg_color: tuple, screen , gun, bullets, alien) -> None:
     """
     Screen updating.
     """
@@ -38,6 +38,7 @@ def screen_update(bg_color: tuple, screen , gun, bullets) -> None:
     for bullet in bullets.sprites():
         bullet.draw_bullet()
     gun.output()
+    alien.draw()
     pygame.display.flip()
 
 def bullets_update(bullets):
