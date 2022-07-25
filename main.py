@@ -5,7 +5,7 @@ from gun import Gun
 
 def run() -> None:
     pygame.init()
-    screen = pygame.display.set_mode((1200, 800))
+    screen = pygame.display.set_mode((800, 900))
     pygame.display.set_caption("Space Invaders")
     bg_color = (0, 0, 0)
     gun = Gun(screen)
