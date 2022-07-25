@@ -1,8 +1,9 @@
 import pygame
 import sys
+from bullet import Bullet
 
 
-def events(gun) -> None:
+def events(screen, gun, bullets) -> None:
     """
     Events proccessing.
     """
@@ -16,6 +17,10 @@ def events(gun) -> None:
             # Left movement.
             elif event.key == pygame.K_a:
                 gun.mleft = True
+            elif event.key == pygame.K_SPACE:
+                # Fire.
+                new_bullet = Bullet(screen, gun)
+                bullets.add(new_bullet)
         elif event.type == pygame.KEYUP:
             # Right movement.
             if event.key == pygame.K_d:
@@ -25,11 +30,13 @@ def events(gun) -> None:
                 gun.mleft = False
 
 
-def screen_update(bg_color: tuple, screen , gun) -> None:
+def screen_update(bg_color: tuple, screen , gun, bullets) -> None:
     """
     Screen updating.
     """
     screen.fill(bg_color)
+    for bullet in bullets.sprites():
+        bullet.draw_bullet()
     gun.output()
     pygame.display.flip()
 
