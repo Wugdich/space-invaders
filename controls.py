@@ -40,3 +40,12 @@ def screen_update(bg_color: tuple, screen , gun, bullets) -> None:
     gun.output()
     pygame.display.flip()
 
+def bullets_update(bullets):
+    """
+    Bullets update.
+    """
+    bullets.update()
+    for bullet in bullets.copy():
+        if bullet.rect.bottom <= 0:
+            bullets.remove(bullet)
+
