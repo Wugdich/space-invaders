@@ -19,6 +19,7 @@ def run() -> None:
         gun.update_gun()
         controls.bullets_update(bullets)
         controls.screen_update(bg_color, screen, gun, bullets, aliens)
+        controls.update_aliens(aliens)
 
 
 if __name__ == '__main__':

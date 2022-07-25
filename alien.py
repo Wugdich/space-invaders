@@ -22,3 +22,10 @@ class Alien(pygame.sprite.Sprite):
         """
         self.screen.blit(self.image, self.rect)
 
+    def update(self):
+        """
+        Alien movement.
+        """
+        self.y += 0.1
+        self.rect.y = self.y
+

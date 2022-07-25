@@ -73,3 +73,10 @@ def create_army(screen, aliens):
             alien.rect.y = alien.rect.height +  1.5 * alien.rect.height * row
             aliens.add(alien)
 
+
+def update_aliens(aliens):
+    """
+    Aliens update.
+    """
+    aliens.update()
+
