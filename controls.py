@@ -2,7 +2,7 @@ import pygame
 import sys
 
 
-def events(gun: object):
+def events(gun) -> None:
     """
     Events proccessing.
     """
@@ -23,4 +23,13 @@ def events(gun: object):
             # Left movement.
             elif event.key == pygame.K_a:
                 gun.mleft = False
+
+
+def screen_update(bg_color: tuple, screen , gun) -> None:
+    """
+    Screen updating.
+    """
+    screen.fill(bg_color)
+    gun.output()
+    pygame.display.flip()
 
