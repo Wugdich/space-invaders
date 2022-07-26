@@ -83,6 +83,7 @@ def update_aliens(aliens, gun, stats, screen, bullets):
     aliens.update()
     if pygame.sprite.spritecollideany(gun, aliens):
         gun_destroy(stats, screen, gun, aliens, bullets)
+    aliens_success(stats, screen, gun, aliens, bullets)
 
 def gun_destroy(stats, screen, gun, aliens, bullets):
     """
@@ -95,3 +96,12 @@ def gun_destroy(stats, screen, gun, aliens, bullets):
     gun.create_gun()
     time.sleep(2)
 
+def aliens_success(stats, screen, gun, aliens, bullets):
+    """
+    Check aliens are at the bottom of the screen.
+    """
+    screen_rect = screen.get_rect()
+    for alien in aliens.sprites():
+        if alien.rect.bottom >= screen_rect.bottom:
+            gun_destroy(stats, screen, gun, aliens, bullets)
+            break
