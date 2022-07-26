@@ -1,4 +1,5 @@
 import pygame
+import time
 import sys
 from bullet import Bullet
 from alien import Alien
@@ -43,7 +44,7 @@ def screen_update(bg_color: tuple, screen , gun, bullets, aliens) -> None:
     pygame.display.flip()
 
 
-def bullets_update(bullets):
+def bullets_update(bullets, aliens):
     """
     Bullets update.
     """
@@ -51,6 +52,7 @@ def bullets_update(bullets):
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
+    collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
 
 
 def create_army(screen, aliens):
@@ -74,9 +76,22 @@ def create_army(screen, aliens):
             aliens.add(alien)
 
 
-def update_aliens(aliens):
+def update_aliens(aliens, gun, stats, screen, bullets):
     """
     Aliens update.
     """
     aliens.update()
+    if pygame.sprite.spritecollideany(gun, aliens):
+        gun_destroy(stats, screen, gun, aliens, bullets)
+
+def gun_destroy(stats, screen, gun, aliens, bullets):
+    """
+    Army and gun collision.
+    """
+    stats.guns_left -= 1
+    aliens.empty()
+    bullets.empty()
+    create_army(screen, aliens)
+    gun.create_gun()
+    time.sleep(2)
 
