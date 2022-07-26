@@ -32,11 +32,12 @@ def events(screen, gun, bullets) -> None:
                 gun.mleft = False
 
 
-def screen_update(bg_color: tuple, screen , gun, bullets, aliens) -> None:
+def screen_update(bg_color: tuple, screen , gun, bullets, aliens, sc) -> None:
     """
     Screen updating.
     """
     screen.fill(bg_color)
+    sc.draw_scores()
     for bullet in bullets.sprites():
         bullet.draw_bullet()
     gun.output()
@@ -44,7 +45,7 @@ def screen_update(bg_color: tuple, screen , gun, bullets, aliens) -> None:
     pygame.display.flip()
 
 
-def bullets_update(bullets, aliens):
+def bullets_update(bullets, aliens, screen, stats, sc):
     """
     Bullets update.
     """
@@ -53,6 +54,13 @@ def bullets_update(bullets, aliens):
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
     collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
+    if collisions:
+        for dead_aliens in collisions.values():
+            stats.scores += 10 * len(dead_aliens)
+        sc.image_scores()
+    if len(aliens) == 0:
+        bullets.empty()
+        create_army(screen, aliens)
 
 
 def create_army(screen, aliens):
@@ -89,12 +97,16 @@ def gun_destroy(stats, screen, gun, aliens, bullets):
     """
     Army and gun collision.
     """
-    stats.guns_left -= 1
-    aliens.empty()
-    bullets.empty()
-    create_army(screen, aliens)
-    gun.create_gun()
-    time.sleep(2)
+    if stats.guns_left > 0:
+        stats.guns_left -= 1
+        aliens.empty()
+        bullets.empty()
+        create_army(screen, aliens)
+        gun.create_gun()
+        time.sleep(2)
+    else:
+        stats.run_game = False
+        sys.exit()
 
 def aliens_success(stats, screen, gun, aliens, bullets):
     """

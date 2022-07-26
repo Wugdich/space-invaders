@@ -20,7 +20,6 @@ class Bullet(pygame.sprite.Sprite):
         """
         Bullet movement.
         """
-        # TODO: delete bullet when out of the screen.
         self.y -= self.speed
         self.rect.y = self.y
 
