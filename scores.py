@@ -1,4 +1,6 @@
 import pygame.font
+from gun import Gun
+from pygame.sprite import Group
 
 
 class Scores():
@@ -14,6 +16,7 @@ class Scores():
         self.font = pygame.font.SysFont(None, 36)
         self.image_scores()
         self.image_high_score()
+        self.image_guns()
 
     def image_scores(self):
         """
@@ -29,6 +32,8 @@ class Scores():
     def draw_scores(self):
         self.screen.blit(self.scores_img, self.scores_rect)
         self.screen.blit(self.high_score_image, self.high_score_rect)
+        self.guns.draw(self.screen)
+        
 
     def image_high_score(self):
         """
@@ -40,4 +45,15 @@ class Scores():
         self.high_score_rect = self.high_score_image.get_rect()
         self.high_score_rect.centerx = self.screen_rect.centerx
         self.high_score_rect.top = self.screen_rect.top + 20
+
+    def image_guns(self):
+        """
+        Guns life to image on screen.
+        """
+        self.guns = Group()
+        for gun_number in range(self.stats.guns_left):
+            gun = Gun(self.screen)
+            gun.rect.x = 15 + gun_number * gun.rect.width
+            gun.rect.y = 20
+            self.guns.add(gun)
 

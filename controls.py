@@ -59,6 +59,7 @@ def bullets_update(bullets, aliens, screen, stats, sc):
             stats.scores += 10 * len(dead_aliens)
         sc.image_scores()
         check_highscore(stats, sc)
+        sc.image_guns()
     if len(aliens) == 0:
         bullets.empty()
         create_army(screen, aliens)
@@ -85,21 +86,22 @@ def create_army(screen, aliens):
             aliens.add(alien)
 
 
-def update_aliens(aliens, gun, stats, screen, bullets):
+def update_aliens(aliens, gun, stats, screen, bullets, sc):
     """
     Aliens update.
     """
     aliens.update()
     if pygame.sprite.spritecollideany(gun, aliens):
-        gun_destroy(stats, screen, gun, aliens, bullets)
-    aliens_success(stats, screen, gun, aliens, bullets)
+        gun_destroy(stats, screen, gun, aliens, bullets, sc)
+    aliens_success(stats, screen, gun, aliens, bullets, sc)
 
-def gun_destroy(stats, screen, gun, aliens, bullets):
+def gun_destroy(stats, screen, gun, aliens, bullets, sc):
     """
     Army and gun collision.
     """
     if stats.guns_left > 0:
         stats.guns_left -= 1
+        sc.image_guns()
         aliens.empty()
         bullets.empty()
         create_army(screen, aliens)
@@ -109,14 +111,14 @@ def gun_destroy(stats, screen, gun, aliens, bullets):
         stats.run_game = False
         sys.exit()
 
-def aliens_success(stats, screen, gun, aliens, bullets):
+def aliens_success(stats, screen, gun, aliens, bullets, sc):
     """
     Check aliens are at the bottom of the screen.
     """
     screen_rect = screen.get_rect()
     for alien in aliens.sprites():
         if alien.rect.bottom >= screen_rect.bottom:
-            gun_destroy(stats, screen, gun, aliens, bullets)
+            gun_destroy(stats, screen, gun, aliens, bullets, sc)
             break
 
 def check_highscore(stats, sc):
