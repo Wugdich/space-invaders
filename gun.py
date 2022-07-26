@@ -1,7 +1,8 @@
 import pygame
+from pygame.sprite import Sprite
 
 
-class Gun():
+class Gun(Sprite):
 
     def __init__(self, screen):
         

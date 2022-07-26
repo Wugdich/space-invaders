@@ -13,6 +13,7 @@ class Scores():
         self.text_color = (255, 255, 255)
         self.font = pygame.font.SysFont(None, 36)
         self.image_scores()
+        self.image_high_score()
 
     def image_scores(self):
         """
@@ -27,3 +28,16 @@ class Scores():
     
     def draw_scores(self):
         self.screen.blit(self.scores_img, self.scores_rect)
+        self.screen.blit(self.high_score_image, self.high_score_rect)
+
+    def image_high_score(self):
+        """
+        High score string to image on screen.
+        """
+        self.high_score_image = self.font.render(
+                str(self.stats.high_score), True, self.text_color, (0, 0, 0)
+                )
+        self.high_score_rect = self.high_score_image.get_rect()
+        self.high_score_rect.centerx = self.screen_rect.centerx
+        self.high_score_rect.top = self.screen_rect.top + 20
+

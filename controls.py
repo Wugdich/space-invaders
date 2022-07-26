@@ -58,6 +58,7 @@ def bullets_update(bullets, aliens, screen, stats, sc):
         for dead_aliens in collisions.values():
             stats.scores += 10 * len(dead_aliens)
         sc.image_scores()
+        check_highscore(stats, sc)
     if len(aliens) == 0:
         bullets.empty()
         create_army(screen, aliens)
@@ -117,3 +118,14 @@ def aliens_success(stats, screen, gun, aliens, bullets):
         if alien.rect.bottom >= screen_rect.bottom:
             gun_destroy(stats, screen, gun, aliens, bullets)
             break
+
+def check_highscore(stats, sc):
+    """
+    New highscore checking.
+    """
+    if stats.scores > stats.high_score:
+        stats.high_score = stats.scores
+        sc.image_high_score()
+        with open("highscore.txt", "w") as file:
+            file.write(str(stats.high_score))
+
